@@ -15,9 +15,9 @@ describe("Ticket System", () => {
       "16-04-2020": {
         ...initialBookedTickets["16-04-2020"],
         MORNING: {
-            name: 'Interstellar',
-            ticketsAvailable: 99,
-        }
+          name: "Interstellar",
+          ticketsAvailable: 99,
+        },
       },
     });
   });
@@ -28,17 +28,17 @@ describe("Ticket System", () => {
       "AFTERNOON",
       "16-04-2020"
     );
-    
+
     expect(bookTicketReturned).toEqual({
-        ...initialBookedTickets,
-        "16-04-2020": {
-          ...initialBookedTickets["16-04-2020"],
-          AFTERNOON: {
-              name: 'Interstellar',
-              ticketsAvailable: 3,
-          }
+      ...initialBookedTickets,
+      "16-04-2020": {
+        ...initialBookedTickets["16-04-2020"],
+        AFTERNOON: {
+          name: "Interstellar",
+          ticketsAvailable: 3,
         },
-      });
+      },
+    });
   });
 
   it("Should show error if no tickets are available", () => {
@@ -58,39 +58,59 @@ describe("Ticket System", () => {
     );
 
     expect(ticketInfoReturned).toEqual({
-        name: 'Interstellar',
-        ticketsAvailable: 100
-      });
+      name: "Interstellar",
+      ticketsAvailable: 100,
+    });
   });
 
   it("should add the movie where name is null", () => {
     const ticketInfoReturned: Tickets = addMovieInfo(
-        initialBookedTickets,
-        'NIGHT',
-        '18-04-2020',
-        'Shawshank Redemption'
+      initialBookedTickets,
+      "AFTERNOON",
+      "18-04-2020",
+      "Shawshank Redemption"
     );
 
     expect(ticketInfoReturned).toEqual({
-        ...initialBookedTickets,
-        "18-04-2020": {
-          ...initialBookedTickets["18-04-2020"],
-          NIGHT: {
-              name: 'Shawshank Redemption',
-              ticketsAvailable: 100,
-          }
+      ...initialBookedTickets,
+      "18-04-2020": {
+        ...initialBookedTickets["18-04-2020"],
+        AFTERNOON: {
+          name: "Shawshank Redemption",
+          ticketsAvailable: 100,
         },
-      });
+      },
+    });
+  });
+
+  it("should add the movie where name is not null", () => {
+    const ticketInfoReturned: Tickets = addMovieInfo(
+      initialBookedTickets,
+      "AFTERNOON",
+      "18-04-2020",
+      "Shawshank Redemption"
+    );
+
+    expect(ticketInfoReturned).toEqual({
+      ...initialBookedTickets,
+      "18-04-2020": {
+        ...initialBookedTickets["18-04-2020"],
+        AFTERNOON: {
+          name: "Shawshank Redemption",
+          ticketsAvailable: 100,
+        },
+      },
+    });
   });
 
   it("should throw error if adding new movie while seats are booked", () => {
-    const ticketInfoReturned: Tickets = addMovieInfo(
+    expect(() =>
+      addMovieInfo(
         initialBookedTickets,
-        'NIGHT',
-        '18-04-2020',
-        'Shawshank Redemption'
-    );
-
-    expect(ticketInfoReturned).toThrowError('Cannot add movie');
+        "EVENING",
+        "18-04-2020",
+        "Shawshank Redemption"
+      )
+    ).toThrowError("Cannot add movie");
   });
 });

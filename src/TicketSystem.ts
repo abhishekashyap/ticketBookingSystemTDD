@@ -1,3 +1,4 @@
+import { TOTAL_TICKETS } from "./constants";
 import { Movie, Tickets, TimeSlot } from "./types";
 
 export const getMovieInfo = (
@@ -14,7 +15,7 @@ export const addMovieInfo = (
 ): Tickets => {
   const { name, ticketsAvailable } = state[date][timeSlot];
 
-  if (name || (ticketsAvailable >= 0)) {
+  if (ticketsAvailable < TOTAL_TICKETS) {
     throw new Error('Cannot add movie');
   }
 
