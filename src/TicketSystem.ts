@@ -13,7 +13,7 @@ export const addMovieInfo = (
   date: string,
   movieName: string,
 ): Tickets => {
-  const { name, ticketsAvailable } = state[date][timeSlot];
+  const { ticketsAvailable } = state[date][timeSlot];
 
   if (ticketsAvailable < TOTAL_TICKETS) {
     throw new Error('Cannot add movie');
