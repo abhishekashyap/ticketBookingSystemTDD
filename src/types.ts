@@ -1,3 +1,8 @@
-export type TimeSlot = 'MORNING' | 'AFTERNOON' | 'EVENING' | 'NIGHT';
+export type TimeSlot = "MORNING" | "AFTERNOON" | "EVENING" | "NIGHT";
 
-export type BookedTickets = { [date in string]: { [slot in TimeSlot]: number } }
+export type Movie = {
+  name: string;
+  ticketsAvailable: number;
+};
+
+export type Tickets = { [date in string]: { [slot in TimeSlot]: Movie } };

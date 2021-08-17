@@ -1,17 +1,25 @@
-import { totalTickets } from "./constants";
-import { BookedTickets, TimeSlot } from "./types";
+import { Tickets, TimeSlot } from "./types";
+
+export const getMovieInfo = (
+  state: Tickets,
+  timeSlot: TimeSlot,
+  date: string
+) => state[date][timeSlot];
 
 export const bookTicket = (
-  state: BookedTickets,
+  state: Tickets,
   timeSlot: TimeSlot,
   date: string
 ) => {
-  if (state[date][timeSlot] < totalTickets) {
-    const updatedState = {
+  if (state[date][timeSlot].ticketsAvailable) {
+    const updatedState: Tickets = {
       ...state,
       [date]: {
         ...state[date],
-        [timeSlot]: state[date][timeSlot] + 1,
+        [timeSlot]: {
+          ...state[date][timeSlot],
+          ticketsAvailable: state[date][timeSlot].ticketsAvailable - 1,
+        }
       },
     };
 
