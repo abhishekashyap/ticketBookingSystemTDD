@@ -1,7 +1,7 @@
 export type TimeSlot = "MORNING" | "AFTERNOON" | "EVENING" | "NIGHT";
 
 export type Movie = {
-  name: string;
+  name: string | null;
   ticketsAvailable: number;
 };
 

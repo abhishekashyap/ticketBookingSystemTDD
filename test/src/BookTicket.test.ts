@@ -1,62 +1,6 @@
-import { bookTicket, getMovieInfo } from "../../src/TicketSystem";
-import { Tickets } from "../../src/types";
-
-const initialBookedTickets: Tickets = {
-  "16-04-2020": {
-    MORNING: {
-      name: "Interstellar",
-      ticketsAvailable: 100,
-    },
-    AFTERNOON: {
-      name: "Interstellar",
-      ticketsAvailable: 4,
-    },
-    EVENING: {
-      name: "Interstellar",
-      ticketsAvailable: 0,
-    },
-    NIGHT: {
-      name: "Interstellar",
-      ticketsAvailable: 100,
-    },
-  },
-  "17-04-2020": {
-    MORNING: {
-      name: "Interstellar",
-      ticketsAvailable: 100,
-    },
-    AFTERNOON: {
-      name: "Interstellar",
-      ticketsAvailable: 100,
-    },
-    EVENING: {
-      name: "Interstellar",
-      ticketsAvailable: 100,
-    },
-    NIGHT: {
-      name: "Interstellar",
-      ticketsAvailable: 100,
-    },
-  },
-  "18-04-2020": {
-    MORNING: {
-      name: "Interstellar",
-      ticketsAvailable: 100,
-    },
-    AFTERNOON: {
-      name: "Interstellar",
-      ticketsAvailable: 100,
-    },
-    EVENING: {
-      name: "Interstellar",
-      ticketsAvailable: 100,
-    },
-    NIGHT: {
-      name: "Interstellar",
-      ticketsAvailable: 100,
-    },
-  },
-};
+import { addMovieInfo, bookTicket, getMovieInfo } from "../../src/TicketSystem";
+import { Movie, Tickets } from "../../src/types";
+import { initialBookedTickets } from "./mock";
 
 describe("Ticket System", () => {
   it("should allow single user should be able to book tickets and get the ticket number", () => {
@@ -117,5 +61,36 @@ describe("Ticket System", () => {
         name: 'Interstellar',
         ticketsAvailable: 100
       });
+  });
+
+  it("should add the movie where name is null", () => {
+    const ticketInfoReturned: Tickets = addMovieInfo(
+        initialBookedTickets,
+        'NIGHT',
+        '18-04-2020',
+        'Shawshank Redemption'
+    );
+
+    expect(ticketInfoReturned).toEqual({
+        ...initialBookedTickets,
+        "18-04-2020": {
+          ...initialBookedTickets["18-04-2020"],
+          NIGHT: {
+              name: 'Shawshank Redemption',
+              ticketsAvailable: 100,
+          }
+        },
+      });
+  });
+
+  it("should throw error if adding new movie while seats are booked", () => {
+    const ticketInfoReturned: Tickets = addMovieInfo(
+        initialBookedTickets,
+        'NIGHT',
+        '18-04-2020',
+        'Shawshank Redemption'
+    );
+
+    expect(ticketInfoReturned).toThrowError('Cannot add movie');
   });
 });
